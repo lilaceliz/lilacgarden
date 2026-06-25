@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>☆ Sunny's headspace ☆</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  --pink:#ff85b3; --pink2:#ffb3d1; --pink3:#ffdcec;
+  --mint:#b3f0e0; --mint2:#d6faf1; --yellow:#fff4a3;
+  --lilac:#d8b4fe; --lilac2:#ede9fe;
+  --white:#fffcff; --text:#5a3060;
+  --dot-color:rgba(255,150,200,0.25);
+}
+html { cursor: none; }
+body {
+  margin:0; font-family:'Nunito','Comic Sans MS',cursive;
+  background-color:#fff0f8;
+  background-image:radial-gradient(var(--dot-color) 1.5px, transparent 1.5px);
+  background-size:18px 18px; color:var(--text); overflow-x:hidden;
+}
+/* CURSOR */
+.custom-cursor {
+  position:fixed; width:18px; height:18px; background:var(--pink);
+  border:2px solid white; border-radius:50%; pointer-events:none;
+  z-index:99999; transform:translate(-50%,-50%); transition:transform 0.08s;
+  box-shadow:0 0 6px var(--pink);
+}
+/* SPARKLES */
+.sparkle {
+  position:fixed; background:white; border-radius:50%; pointer-events:none;
+  animation:sparkleFloat linear infinite; opacity:0;
+  box-shadow:0 0 4px white, 0 0 8px var(--pink2);
+}
+@keyframes sparkleFloat {
+  0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+  10%{opacity:.9} 90%{opacity:.5}
+  100%{transform:translateY(-10vh) rotate(360deg);opacity:0}
+}
+/* PETALS */
+.petal {
+  position:fixed; width:9px; height:9px; background:var(--pink2);
+  border-radius:60% 40% 60% 40%; pointer-events:none; z-index:9998;
+  animation:petalFall .9s ease-out forwards;
+}
+@keyframes petalFall {
+  0%{opacity:1;transform:rotate(0deg) scale(1)}
+  100%{opacity:0;transform:translateY(22px) rotate(80deg) scale(.4)}
+}
+/* HEADER */
+header {
+  background:linear-gradient(135deg,#ff85b3 0%,#ffb3d1 40%,#d8b4fe 100%);
+  padding:30px 20px 12px; text-align:center; position:relative; border-bottom:4px solid white;
+}
+header::before {
+  content:''; position:absolute; inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.35) 1px,transparent 1px);
+  background-size:12px 12px; pointer-events:none;
+}
+header h1 {
+  margin:0 0 6px; font-size:clamp(2rem,6vw,3.4rem); font-weight:900; color:white;
+  text-shadow:3px 3px 0 #c060a0,5px 5px 0 rgba(0,0,0,.1); letter-spacing:2px; position:relative;
+}
+header .subtitle {
+  font-size:.95rem; color:white; opacity:.9;
+  animation:blink 1.2s step-start infinite; position:relative;
+}
+@keyframes blink{50%{opacity:0}}
+/* MARQUEE */
+.marquee-bar {
+  background:linear-gradient(90deg,var(--mint) 0%,var(--yellow) 50%,var(--mint) 100%);
+  padding:7px 0; border-top:2px dashed white; border-bottom:2px dashed white;
+  font-weight:700; font-size:.9rem; color:var(--text); letter-spacing:1px;
+}
+/* NAV */
+nav {
+  background:rgba(255,255,255,.7); backdrop-filter:blur(4px);
+  text-align:center; padding:10px; border-bottom:3px dotted var(--pink2);
+  display:flex; justify-content:center; gap:6px; flex-wrap:wrap;
+}
+nav a {
+  display:inline-block; text-decoration:none; color:var(--text); font-weight:700;
+  font-size:.88rem; padding:5px 14px; border:2px solid var(--pink); border-radius:999px;
+  background:white; transition:all .2s; box-shadow:2px 2px 0 var(--pink2); cursor:pointer;
+}
+nav a:hover, nav a.active {
+  background:var(--pink); color:white; transform:translateY(-2px); box-shadow:2px 4px 0 #c060a0;
+}
+/* LAYOUT */
+.container {
+  display:flex; max-width:1100px; margin:24px auto; padding:0 16px; align-items:flex-start;
+}
+/* SIDEBAR */
+.sidebar { width:230px; min-width:200px; flex-shrink:0; display:flex; flex-direction:column; gap:14px; }
+.sidebar-box {
+  background:white; border:3px solid var(--pink2); border-radius:16px;
+  padding:14px; box-shadow:4px 4px 0 var(--pink3); position:relative;
+}
+.sidebar-box::before {
+  content:''; position:absolute; top:-1px; left:10px; width:60%; height:4px;
+  background:var(--pink); border-radius:999px;
+}
+.sidebar-box h2 { margin:6px 0 10px; font-size:.95rem; font-weight:900; color:var(--pink); text-align:center; letter-spacing:1px; }
+.sidebar-box p,.sidebar-box li { font-size:.82rem; line-height:1.6; margin:0; }
+.sidebar-box ul { padding-left:18px; margin:0; }
+.sidebar-box ul li { margin-bottom:4px; }
+.sidebar-box a { color:var(--pink); font-weight:700; text-decoration:none; }
+.sidebar-box a:hover { text-decoration:underline; }
+.status-box { border-color:var(--lilac); box-shadow:4px 4px 0 var(--lilac2); }
+.status-box::before { background:var(--lilac); }
+.status-box h2 { color:#9333ea; }
+.status-dot {
+  display:inline-block; width:8px; height:8px; border-radius:50%;
+  background:#4ade80; margin-right:4px; box-shadow:0 0 4px #4ade80; animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+/* CONTENT AREA */
+.content { flex:1; min-width:0; padding-left:20px; display:flex; flex-direction:column; gap:18px; }
+/* PAGE SECTIONS */
+.page { display:none; flex-direction:column; gap:18px; }
+.page.active { display:flex; }
+/* POSTS */
+.post {
+  background:white; border:3px solid var(--pink2); border-radius:18px;
+  padding:18px 20px; box-shadow:5px 5px 0 var(--pink3); transition:transform .2s; position:relative;
+}
+.post:hover { transform:translateY(-3px); }
+.post h2 { margin:0 0 6px; color:var(--pink); font-size:1.15rem; font-weight:900; }
+.post-meta { font-size:.75rem; color:#b0a0c0; margin-bottom:8px; }
+.post-body { font-size:.88rem; line-height:1.7; margin:0; white-space:pre-wrap; }
+.post-tag {
+  display:inline-block; background:var(--pink3); color:var(--pink); border-radius:999px;
+  font-size:.72rem; font-weight:700; padding:2px 10px; margin:6px 3px 0 0; border:1.5px solid var(--pink2);
+}
+.post-admin-btns { position:absolute; top:12px; right:12px; display:flex; gap:6px; }
+.post-admin-btns button {
+  border-radius:999px; padding:3px 10px; font-family:inherit; font-size:.75rem;
+  font-weight:700; cursor:pointer; transition:all .15s;
+}
+.btn-edit-post { background:var(--lilac2); color:#7c3aed; border:1.5px solid var(--lilac); }
+.btn-del-post  { background:#fde8e8; color:#e11d48; border:1.5px solid #fca5a5; }
+.btn-edit-post:hover { background:var(--lilac); }
+.btn-del-post:hover  { background:#fca5a5; }
+/* GALLERY */
+.gallery-box { background:white; border:3px solid var(--mint); border-radius:18px; padding:18px 20px; box-shadow:5px 5px 0 var(--mint2); }
+.gallery-box h2 { margin:0 0 12px; color:#059669; font-size:1.1rem; font-weight:900; }
+.gallery { display:flex; gap:10px; flex-wrap:wrap; }
+.gallery-item {
+  width:110px; height:110px; border:3px solid var(--mint); border-radius:12px;
+  background:var(--mint2); display:flex; align-items:center; justify-content:center;
+  font-size:1.8rem; box-shadow:3px 3px 0 #a7f3d0; cursor:pointer; transition:transform .2s;
+  overflow:hidden; position:relative;
+}
+.gallery-item:hover { transform:rotate(-3deg) scale(1.07); }
+.gallery-item img { width:100%; height:100%; object-fit:cover; border-radius:8px; }
+/* ABOUT PAGE */
+.about-box { background:white; border:3px solid var(--lilac); border-radius:18px; padding:24px; box-shadow:5px 5px 0 var(--lilac2); }
+.about-box h2 { margin:0 0 12px; color:#7c3aed; font-size:1.2rem; font-weight:900; }
+.about-box p { font-size:.9rem; line-height:1.8; }
+/* GUESTBOOK */
+.guestbook-box { background:white; border:3px dashed var(--pink); border-radius:18px; padding:18px 20px; box-shadow:5px 5px 0 var(--pink3); }
+.guestbook-box h2 { margin:0 0 10px; color:var(--pink); font-size:1.1rem; font-weight:900; }
+.guestbook-messages { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; max-height:200px; overflow-y:auto; }
+.guestbook-msg { background:var(--pink3); border-radius:10px; padding:7px 12px; font-size:.82rem; border-left:3px solid var(--pink); }
+.guestbook-input-row { display:flex; gap:8px; flex-wrap:wrap; }
+.guestbook-input-row input {
+  flex:1; padding:7px 12px; border:2px solid var(--pink2); border-radius:999px;
+  font-family:inherit; font-size:.85rem; outline:none; color:var(--text); min-width:0;
+}
+.guestbook-input-row input:focus { border-color:var(--pink); }
+/* BUTTONS */
+.btn-kawaii {
+  padding:7px 18px; background:var(--pink); color:white; border:none; border-radius:999px;
+  font-family:inherit; font-weight:700; font-size:.85rem; cursor:pointer;
+  box-shadow:2px 2px 0 #c060a0; transition:all .2s;
+}
+.btn-kawaii:hover { background:#ff5fa0; transform:translateY(-2px); box-shadow:2px 4px 0 #c060a0; }
+.btn-secondary {
+  padding:7px 18px; background:white; color:var(--text); border:2px solid var(--pink2);
+  border-radius:999px; font-family:inherit; font-weight:700; font-size:.85rem; cursor:pointer; transition:all .2s;
+}
+.btn-secondary:hover { border-color:var(--pink); color:var(--pink); }
+/* MUSIC PLAYER */
+.music-player {
+  position:fixed; bottom:14px; right:14px; background:rgba(255,255,255,.92);
+  backdrop-filter:blur(6px); padding:10px 14px; border:2px solid var(--pink2);
+  border-radius:16px; font-size:.75rem; box-shadow:4px 4px 0 var(--pink3);
+  z-index:100; color:var(--text); font-weight:700;
+}
+.music-player audio { display:block; margin-top:6px; width:190px; }
+/* FOOTER */
+footer {
+  text-align:center; padding:18px; margin-top:30px;
+  background:linear-gradient(135deg,#ff85b3 0%,#d8b4fe 100%);
+  color:white; font-weight:700; font-size:.9rem; border-top:4px solid white;
+}
+footer span { opacity:.85; font-size:.78rem; }
+#adminTrigger { opacity:0; font-size:.6rem; cursor:default; user-select:none; color:transparent; }
+#adminTrigger:hover { opacity:.3; cursor:pointer; }
+/* SCROLLBAR */
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:var(--pink3)}
+::-webkit-scrollbar-thumb{background:var(--pink);border-radius:999px}
+
+/* ══ ADMIN OVERLAY ══ */
+#adminOverlay {
+  display:none; position:fixed; inset:0; background:rgba(90,48,96,.55);
+  backdrop-filter:blur(6px); z-index:10000; align-items:center; justify-content:center;
+}
+#adminOverlay.open { display:flex; }
+#adminPanel {
+  background:white; border:3px solid var(--pink2); border-radius:24px;
+  box-shadow:8px 8px 0 var(--pink3); width:min(700px,96vw); max-height:90vh;
+  overflow-y:auto; padding:28px 28px 24px; position:relative;
+}
+#adminPanel h2 { margin:0 0 18px; font-size:1.3rem; font-weight:900; color:var(--pink); text-align:center; }
+.admin-tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+.tab-btn {
+  padding:6px 16px; border-radius:999px; font-family:inherit; font-weight:700; font-size:.82rem;
+  cursor:pointer; transition:all .2s; border:2px solid var(--pink2); background:white; color:var(--text);
+}
+.tab-btn.active { background:var(--pink); color:white; border-color:var(--pink); }
+.tab-pane { display:none; }
+.tab-pane.active { display:block; }
+.field-group { display:flex; flex-direction:column; gap:6px; margin-bottom:14px; }
+.field-group label { font-size:.82rem; font-weight:700; color:var(--text); }
+.field-group input,.field-group textarea,.field-group select {
+  padding:8px 12px; border:2px solid var(--pink2); border-radius:12px;
+  font-family:inherit; font-size:.88rem; color:var(--text); outline:none; resize:vertical; transition:border-color .2s;
+}
+.field-group input:focus,.field-group textarea:focus { border-color:var(--pink); }
+.field-group textarea { min-height:130px; }
+.form-row { display:flex; gap:10px; }
+.form-row .field-group { flex:1; }
+.admin-post-list { display:flex; flex-direction:column; gap:10px; }
+.admin-post-item {
+  background:var(--pink3); border-radius:12px; padding:10px 14px;
+  display:flex; align-items:center; gap:10px;
+}
+.admin-post-item .apl-title { flex:1; font-weight:700; font-size:.88rem; }
+.admin-post-item .apl-date  { font-size:.75rem; color:#b0a0c0; white-space:nowrap; }
+.admin-post-item .apl-btns  { display:flex; gap:6px; }
+#closeAdmin {
+  position:absolute; top:14px; right:16px; background:var(--pink3); border:2px solid var(--pink2);
+  border-radius:999px; font-size:1rem; width:32px; height:32px; cursor:pointer; color:var(--pink);
+  font-weight:900; display:flex; align-items:center; justify-content:center; transition:all .2s;
+}
+#closeAdmin:hover { background:var(--pink); color:white; }
+#loginScreen { text-align:center; }
+#loginScreen p { font-size:.88rem; color:#b0a0c0; margin-bottom:16px; }
+#loginScreen input {
+  display:block; margin:0 auto 12px; padding:8px 16px; border:2px solid var(--pink2);
+  border-radius:999px; font-family:inherit; font-size:.9rem; outline:none; text-align:center; width:220px;
+}
+#loginScreen input:focus { border-color:var(--pink); }
+#loginError { color:#e11d48; font-size:.8rem; margin-top:8px; display:none; }
+.admin-notice {
+  background:var(--mint2); border:2px solid var(--mint); border-radius:10px;
+  padding:8px 12px; font-size:.8rem; color:#065f46; margin-bottom:14px;
+}
+/* Gallery admin grid */
+.gallery-admin-grid { display:flex; flex-wrap:wrap; gap:10px; margin-top:10px; }
+.gag-item {
+  width:90px; height:90px; border:3px solid var(--mint); border-radius:12px;
+  background:var(--mint2); position:relative; overflow:hidden; display:flex;
+  align-items:center; justify-content:center; font-size:1.6rem;
+}
+.gag-item img { width:100%; height:100%; object-fit:cover; }
+.gag-del {
+  position:absolute; top:3px; right:3px; background:#e11d48; color:white;
+  border:none; border-radius:50%; width:20px; height:20px; font-size:.7rem;
+  cursor:pointer; display:flex; align-items:center; justify-content:center;
+  font-weight:900; line-height:1; opacity:.85;
+}
+.gag-del:hover { opacity:1; }
+/* Favorites admin */
+.fav-list { display:flex; flex-direction:column; gap:8px; margin-bottom:12px; }
+.fav-item {
+  background:var(--pink3); border-radius:10px; padding:7px 12px;
+  display:flex; align-items:center; gap:8px; font-size:.85rem;
+}
+.fav-item span { flex:1; }
+.fav-item button {
+  background:#fde8e8; color:#e11d48; border:1.5px solid #fca5a5;
+  border-radius:999px; padding:2px 9px; font-size:.72rem; font-weight:700; cursor:pointer;
+}
+.fav-item button:hover { background:#fca5a5; }
+.fav-add-row { display:flex; gap:8px; }
+.fav-add-row input {
+  flex:1; padding:7px 12px; border:2px solid var(--pink2); border-radius:999px;
+  font-family:inherit; font-size:.85rem; outline:none; color:var(--text);
+}
+.fav-add-row input:focus { border-color:var(--pink); }
+
+@media(max-width:680px){
+  .container{flex-direction:column;padding:0 10px}
+  .sidebar{width:100%;flex-direction:row;flex-wrap:wrap}
+  .sidebar-box{flex:1 1 200px}
+  .content{padding-left:0}
+  #adminPanel{padding:20px 14px}
+}
+</style>
+</head>
+<body>
+
+<div class="custom-cursor" id="cursor"></div>
+
+<script>
+for(let i=0;i<30;i++){
+  const s=document.createElement('div'); s.className='sparkle';
+  s.style.cssText=`left:${Math.random()*100}vw;animation-duration:${5+Math.random()*7}s;animation-delay:${Math.random()*8}s;width:${4+Math.random()*6}px;height:${4+Math.random()*6}px;`;
+  document.body.appendChild(s);
+}
+</script>
+
+<header>
+  <h1>☆ Sunny's Headspace ☆</h1>
+  <p class="subtitle">✦ welcome to my colorful little corner of the internet ✦</p>
+</header>
+
+<div class="marquee-bar">
+  <marquee behavior="scroll" scrollamount="4">
+    ☆ POSTING ABOUT MY LIFE ☆&nbsp;&nbsp;✿ WEEB LIFE ✿&nbsp;&nbsp;☆ YAPP YAPP ☆&nbsp;&nbsp;♡ made with love ♡&nbsp;&nbsp;✦ u r welcome here ✦&nbsp;&nbsp;☆ POSTING ABOUT MY LIFE ☆
+  </marquee>
+</div>
+
+<nav id="mainNav">
+  <a onclick="showPage('home')"      class="active">🏠 Home</a>
+  <a onclick="showPage('blog')">📖 Blog</a>
+  <a onclick="showPage('about')">🌸 About Me</a>
+  <a onclick="showPage('gallery')">🖼 Gallery</a>
+  <a onclick="showPage('guestbook')">💌 Guestbook</a>
+</nav>
+
+<div class="container">
+  <aside class="sidebar">
+    <div class="sidebar-box status-box">
+      <h2>✦ Status</h2>
+      <p><span class="status-dot"></span>online and posting</p>
+      <p style="margin-top:6px;font-size:.78rem;color:#b0a0c0;">🎵 listening to: my playlist</p>
+    </div>
+    <div class="sidebar-box">
+      <h2>🌸 About Me</h2>
+      <p>Hi!! I'm a girl who loves to talk about her favorite things. Since I don't like to disturb people I decided to create my own website!! Weird or not, you'll find all my interests here ☆</p>
+    </div>
+    <div class="sidebar-box">
+      <h2>💖 Favorites</h2>
+      <ul id="sidebarFavs"></ul>
+    </div>
+    <div class="sidebar-box">
+      <h2>🔗 Links</h2>
+      <ul>
+        <li><a href="#">🎵 My Playlist</a></li>
+        <li><a href="#">⭐ My Recs</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <main class="content">
+
+    <!-- HOME -->
+    <div id="pageHome" class="page active">
+      <div id="postsArea"></div>
+    </div>
+
+    <!-- BLOG -->
+    <div id="pageBlog" class="page">
+      <div class="post" style="border-color:var(--lilac);box-shadow:5px 5px 0 var(--lilac2);">
+        <h2 style="color:#7c3aed;">📖 All Posts ☆</h2>
+        <p style="font-size:.82rem;color:#b0a0c0;margin:0;">Everything I've ever written, in one place ✿</p>
+      </div>
+      <div id="allPostsArea"></div>
+    </div>
+
+    <!-- ABOUT -->
+    <div id="pageAbout" class="page">
+      <div class="about-box">
+        <h2>🌸 About Me ☆</h2>
+        <p>Hi!! I'm a girl who loves to talk about her favorite things. Since I don't like to disturb people I decided to create my own website!! Weird or not, you'll find all my interests here ☆</p>
+        <p style="margin-top:12px;">This is my little corner of the internet where I can just be myself, talk about things I love, and exist without worrying about anything. Welcome, and stay as long as you like ♡</p>
+      </div>
+      <div class="post" style="border-color:var(--mint);box-shadow:5px 5px 0 var(--mint2);">
+        <h2 style="color:#059669;">💖 My Favorites</h2>
+        <ul id="aboutFavs" style="font-size:.9rem;line-height:2;padding-left:20px;margin:0;"></ul>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div id="pageGallery" class="page">
+      <div class="gallery-box">
+        <h2>🖼 My Gallery ☆</h2>
+        <div class="gallery" id="galleryGrid"></div>
+      </div>
+    </div>
+
+    <!-- GUESTBOOK -->
+    <div id="pageGuestbook" class="page">
+      <div class="guestbook-box">
+        <h2>💌 Guestbook ☆</h2>
+        <p style="font-size:.82rem;margin:0 0 10px;color:#b0a0c0;">Leave a little message for me!! ♡</p>
+        <div class="guestbook-messages" id="gbMessages">
+          <div class="guestbook-msg">✦ <b>Anonymous:</b> Love your page so much!! 💖</div>
+        </div>
+        <div class="guestbook-input-row">
+          <input type="text" id="gbInput" placeholder="Your message... ✿" maxlength="120">
+          <button class="btn-kawaii" onclick="sendMessage()">Send ☆</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer>
+  ☆ Sunny's Headspace — made with love & sparkles ☆<br>
+  <span>✦ best viewed with your heart open ✦</span>
+  &nbsp;&nbsp;<span id="adminTrigger" onclick="openAdmin()">✦</span>
+</footer>
+
+<div class="music-player">
+  🎵 Now Playing:
+  <audio controls loop>
+    <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<!-- ══ ADMIN PANEL ══ -->
+<div id="adminOverlay">
+  <div id="adminPanel">
+    <button id="closeAdmin" onclick="closeAdmin()">✕</button>
+    <h2>✦ Admin Panel ☆</h2>
+
+    <div id="loginScreen">
+      <p>Enter your password to manage your blog ♡</p>
+      <input type="password" id="adminPwInput" placeholder="password..." onkeydown="if(event.key==='Enter')checkLogin()">
+      <button class="btn-kawaii" onclick="checkLogin()">Login ☆</button>
+      <p id="loginError">Wrong password! Try again ✕</p>
+    </div>
+
+    <div id="panelContent" style="display:none;">
+      <div class="admin-notice">
+        💾 Everything is saved in your browser's localStorage — stays until you clear site data!
+      </div>
+      <div class="admin-tabs">
+        <button class="tab-btn active" onclick="switchTab('new',this)">✏️ New Post</button>
+        <button class="tab-btn"        onclick="switchTab('manage',this)">📋 Posts</button>
+        <button class="tab-btn"        onclick="switchTab('favs',this)">💖 Favorites</button>
+        <button class="tab-btn"        onclick="switchTab('galleryadmin',this)">🖼 Gallery</button>
+        <button class="tab-btn"        onclick="switchTab('settings',this)">⚙️ Settings</button>
+      </div>
+
+      <!-- NEW POST -->
+      <div class="tab-pane active" id="tab-new">
+        <div class="field-group">
+          <label>Post Title ✦</label>
+          <input type="text" id="pTitle" placeholder="My thoughts on...">
+        </div>
+        <div class="form-row">
+          <div class="field-group">
+            <label>Date</label>
+            <input type="date" id="pDate">
+          </div>
+          <div class="field-group">
+            <label>Mood emoji</label>
+            <input type="text" id="pMood" placeholder="🌸" maxlength="4">
+          </div>
+        </div>
+        <div class="field-group">
+          <label>Tags (comma separated)</label>
+          <input type="text" id="pTags" placeholder="life, anime, thoughts">
+        </div>
+        <div class="field-group">
+          <label>Post Content ✦</label>
+          <textarea id="pBody" placeholder="Write whatever you want here... ✿"></textarea>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn-kawaii"   onclick="publishPost()">Publish ☆</button>
+          <button class="btn-secondary" onclick="previewPost()">Preview ✦</button>
+          <button class="btn-secondary" onclick="clearForm()">Clear</button>
+        </div>
+        <div id="publishMsg" style="display:none;margin-top:10px;font-size:.85rem;color:#059669;font-weight:700;"></div>
+        <div id="previewArea" style="display:none;margin-top:16px;"></div>
+      </div>
+
+      <!-- MANAGE POSTS -->
+      <div class="tab-pane" id="tab-manage">
+        <div id="manageList" class="admin-post-list"></div>
+        <p id="noPostsMsg" style="font-size:.85rem;color:#b0a0c0;text-align:center;display:none;">No posts yet! Write your first one ✿</p>
+      </div>
+
+      <!-- FAVORITES -->
+      <div class="tab-pane" id="tab-favs">
+        <p style="font-size:.82rem;color:#b0a0c0;margin-bottom:12px;">Edit what shows up in your Favorites list in the sidebar and About Me page ♡</p>
+        <div id="favsList" class="fav-list"></div>
+        <div class="fav-add-row">
+          <input type="text" id="favInput" placeholder="Add a favorite... e.g. 🍓 Strawberries" maxlength="60" onkeydown="if(event.key==='Enter')addFavorite()">
+          <button class="btn-kawaii" onclick="addFavorite()">Add ☆</button>
+        </div>
+        <div id="favsMsg" style="display:none;margin-top:8px;font-size:.82rem;font-weight:700;color:#059669;"></div>
+      </div>
+
+      <!-- GALLERY ADMIN -->
+      <div class="tab-pane" id="tab-galleryadmin">
+        <p style="font-size:.82rem;color:#b0a0c0;margin-bottom:10px;">Upload images to your gallery ♡ (stored as base64 in localStorage)</p>
+        <label style="display:inline-block;padding:8px 18px;background:var(--mint);border:2px solid var(--mint);border-radius:999px;font-weight:700;font-size:.85rem;cursor:pointer;color:#065f46;transition:all .2s;">
+          📁 Choose Images
+          <input type="file" id="galleryUpload" accept="image/*" multiple style="display:none;" onchange="uploadGalleryImages(this)">
+        </label>
+        <span id="uploadMsg" style="font-size:.8rem;color:#b0a0c0;margin-left:10px;"></span>
+        <div id="galleryAdminGrid" class="gallery-admin-grid" style="margin-top:14px;"></div>
+        <p id="noGalleryMsg" style="font-size:.85rem;color:#b0a0c0;text-align:center;display:none;">No images yet! Upload some ✿</p>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="tab-pane" id="tab-settings">
+        <div class="field-group">
+          <label>Change password</label>
+          <input type="password" id="newPw1" placeholder="New password">
+        </div>
+        <div class="field-group">
+          <label>Confirm new password</label>
+          <input type="password" id="newPw2" placeholder="Confirm">
+        </div>
+        <button class="btn-kawaii" onclick="changePassword()">Save Password ☆</button>
+        <div id="pwMsg" style="display:none;margin-top:10px;font-size:.85rem;font-weight:700;"></div>
+        <hr style="border:none;border-top:2px dashed var(--pink2);margin:20px 0;">
+        <p style="font-size:.82rem;color:#b0a0c0;">⚠️ Danger zone</p>
+        <button class="btn-secondary" style="border-color:#fca5a5;color:#e11d48;" onclick="deleteAllPosts()">Delete ALL posts</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══ STORAGE KEYS ══ */
+const POSTS_KEY   = 'sunnyBlogPosts';
+const PW_KEY      = 'sunnyAdminPw';
+const FAVS_KEY    = 'sunnyFavorites';
+const GALLERY_KEY = 'sunnyGallery';
+
+const DEFAULT_FAVS = ['Lorem ipsum','Lorem ipsum','Lorem ipsum'];
+
+/* ══ HELPERS ══ */
+const getPosts   = () => { try{ return JSON.parse(localStorage.getItem(POSTS_KEY))||[]; }catch{return[];} };
+const savePosts  = a  => localStorage.setItem(POSTS_KEY, JSON.stringify(a));
+const getPassword= () => localStorage.getItem(PW_KEY) || 'sunny123';
+const getFavs    = () => { try{ return JSON.parse(localStorage.getItem(FAVS_KEY))||DEFAULT_FAVS; }catch{return DEFAULT_FAVS;} };
+const saveFavs   = a  => localStorage.setItem(FAVS_KEY, JSON.stringify(a));
+const getGallery = () => { try{ return JSON.parse(localStorage.getItem(GALLERY_KEY))||[]; }catch{return[];} };
+const saveGallery= a  => localStorage.setItem(GALLERY_KEY, JSON.stringify(a));
+
+/* ══ CURSOR + PETALS ══ */
+const cursor = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX+'px';
+  cursor.style.top  = e.clientY+'px';
+  if(Math.random()>.6) return;
+  const p=document.createElement('div'); p.className='petal';
+  p.style.left=e.clientX+'px'; p.style.top=e.clientY+'px';
+  p.style.background=['#ffb3d1','#d8b4fe','#b3f0e0','#fff4a3'][Math.floor(Math.random()*4)];
+  document.body.appendChild(p); setTimeout(()=>p.remove(),900);
+});
+document.addEventListener('mousedown',()=>cursor.style.transform='translate(-50%,-50%) scale(.7)');
+document.addEventListener('mouseup',  ()=>cursor.style.transform='translate(-50%,-50%) scale(1)');
+
+/* ══ GUESTBOOK ══ */
+function sendMessage(){
+  const input=document.getElementById('gbInput');
+  const msg=input.value.trim(); if(!msg) return;
+  const div=document.createElement('div'); div.className='guestbook-msg';
+  div.innerHTML=`✦ <b>Anonymous:</b> ${msg.replace(/</g,'&lt;')}`;
+  const box=document.getElementById('gbMessages');
+  box.appendChild(div); box.scrollTop=box.scrollHeight; input.value='';
+}
+document.getElementById('gbInput').addEventListener('keydown',e=>{ if(e.key==='Enter') sendMessage(); });
+
+/* ══ PAGE NAVIGATION ══ */
+function showPage(name){
+  const pages=['home','blog','about','gallery','guestbook'];
+  pages.forEach(p=>{
+    document.getElementById('page'+p.charAt(0).toUpperCase()+p.slice(1)).classList.toggle('active', p===name);
+  });
+  document.querySelectorAll('#mainNav a').forEach((a,i)=>{
+    a.classList.toggle('active', pages[i]===name);
+  });
+  if(name==='blog')    renderAllPosts();
+  if(name==='gallery') renderGallery();
+  if(name==='about')   renderAboutFavs();
+}
+
+/* ══ RENDER POSTS ══ */
+function buildPostHTML(p, isAdmin){
+  const tags=(p.tags||[]).map(t=>`<span class="post-tag">${t.trim()}</span>`).join('');
+  const btns=isAdmin?`<div class="post-admin-btns">
+    <button class="btn-edit-post" onclick="editPost('${p.id}')">✏️ edit</button>
+    <button class="btn-del-post"  onclick="deletePost('${p.id}')">✕ delete</button>
+  </div>`:'';
+  return `<div class="post" id="post-${p.id}">${btns}
+    <p class="post-meta">📅 ${p.date}${p.mood?' &nbsp;'+p.mood:''}</p>
+    <h2>${p.title}</h2>
+    <p class="post-body">${p.body.replace(/</g,'&lt;').replace(/\n/g,'<br>')}</p>
+    ${tags}</div>`;
+}
+
+function renderPosts(){
+  const area=document.getElementById('postsArea');
+  const posts=getPosts();
+  const admin=sessionStorage.getItem('adminLoggedIn')==='1';
+  if(!posts.length){
+    area.innerHTML=`<div class="post"><h2>✦ Welcome! ☆</h2>
+      <p class="post-body">No posts yet — this page is waiting for your stories ✿<br>
+      <span style="font-size:.8rem;color:#b0a0c0;">Press Ctrl+Shift+A to open the admin panel!</span></p></div>`;
+    return;
+  }
+  area.innerHTML=[...posts].reverse().slice(0,5).map(p=>buildPostHTML(p,admin)).join('');
+}
+
+function renderAllPosts(){
+  const area=document.getElementById('allPostsArea');
+  const posts=getPosts();
+  const admin=sessionStorage.getItem('adminLoggedIn')==='1';
+  if(!posts.length){
+    area.innerHTML=`<div class="post"><p class="post-body" style="color:#b0a0c0;text-align:center;">Nothing here yet ✿</p></div>`;
+    return;
+  }
+  area.innerHTML=[...posts].reverse().map(p=>buildPostHTML(p,admin)).join('');
+}
+
+/* ══ RENDER GALLERY ══ */
+function renderGallery(){
+  const grid=document.getElementById('galleryGrid');
+  const imgs=getGallery();
+  if(!imgs.length){
+    grid.innerHTML=`<div class="gallery-item">🌸</div><div class="gallery-item">🍓</div>
+      <div class="gallery-item">✨</div><div class="gallery-item">🌙</div><div class="gallery-item">🎀</div>`;
+    return;
+  }
+  grid.innerHTML=imgs.map(src=>`<div class="gallery-item"><img src="${src}" alt="gallery"></div>`).join('');
+}
+
+/* ══ RENDER SIDEBAR FAVS ══ */
+function renderSidebarFavs(){
+  const ul=document.getElementById('sidebarFavs');
+  ul.innerHTML=getFavs().map(f=>`<li>${f}</li>`).join('');
+}
+function renderAboutFavs(){
+  const ul=document.getElementById('aboutFavs');
+  ul.innerHTML=getFavs().map(f=>`<li>${f}</li>`).join('');
+}
+
+/* ══ ADMIN: LOGIN ══ */
+function openAdmin(){
+  document.getElementById('adminOverlay').classList.add('open');
+  if(sessionStorage.getItem('adminLoggedIn')==='1') showPanel();
+  else{
+    document.getElementById('loginScreen').style.display='';
+    document.getElementById('panelContent').style.display='none';
+    setTimeout(()=>document.getElementById('adminPwInput').focus(),100);
+  }
+}
+function closeAdmin(){
+  document.getElementById('adminOverlay').classList.remove('open');
+  renderPosts(); renderAllPosts(); renderSidebarFavs(); renderGallery();
+}
+document.getElementById('adminOverlay').addEventListener('click',e=>{
+  if(e.target===document.getElementById('adminOverlay')) closeAdmin();
+});
+function checkLogin(){
+  const val=document.getElementById('adminPwInput').value;
+  if(val===getPassword()){
+    sessionStorage.setItem('adminLoggedIn','1');
+    document.getElementById('adminPwInput').value='';
+    document.getElementById('loginError').style.display='none';
+    showPanel();
+  } else {
+    document.getElementById('loginError').style.display='block';
+    document.getElementById('adminPwInput').select();
+  }
+}
+function showPanel(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('panelContent').style.display='';
+  const today=new Date().toISOString().split('T')[0];
+  if(!document.getElementById('pDate').value) document.getElementById('pDate').value=today;
+}
+
+/* ══ ADMIN: TABS ══ */
+function switchTab(name, btn){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+  if(name==='manage')      renderManageList();
+  if(name==='favs')        renderAdminFavs();
+  if(name==='galleryadmin') renderGalleryAdmin();
+}
+
+/* ══ ADMIN: PUBLISH/EDIT POST ══ */
+let editingId=null;
+function publishPost(){
+  const title=document.getElementById('pTitle').value.trim();
+  const body =document.getElementById('pBody').value.trim();
+  const date =document.getElementById('pDate').value||new Date().toISOString().split('T')[0];
+  const mood =document.getElementById('pMood').value.trim();
+  const tags =document.getElementById('pTags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  if(!title||!body){ alert('Fill in the title and content! ✿'); return; }
+  const posts=getPosts();
+  if(editingId){
+    const idx=posts.findIndex(p=>p.id===editingId);
+    if(idx!==-1) posts[idx]={...posts[idx],title,body,date,mood,tags};
+    editingId=null;
+  } else {
+    posts.push({id:Date.now().toString(),title,body,date,mood,tags});
+  }
+  savePosts(posts);
+  clearForm();
+  const msg=document.getElementById('publishMsg');
+  msg.style.display='block'; msg.textContent='✦ Post published! ☆';
+  setTimeout(()=>msg.style.display='none',3000);
+}
+function clearForm(){
+  ['pTitle','pBody','pMood','pTags'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('previewArea').style.display='none'; editingId=null;
+}
+function previewPost(){
+  const fakePost={id:'preview',
+    title:document.getElementById('pTitle').value.trim()||'(no title)',
+    body:document.getElementById('pBody').value.trim()||'(empty)',
+    date:document.getElementById('pDate').value,
+    mood:document.getElementById('pMood').value.trim(),
+    tags:document.getElementById('pTags').value.split(',').map(t=>t.trim()).filter(Boolean)
+  };
+  const area=document.getElementById('previewArea');
+  area.style.display='block';
+  area.innerHTML=`<p style="font-size:.78rem;color:#b0a0c0;margin-bottom:6px;">— Preview —</p>`+buildPostHTML(fakePost,false);
+}
+
+/* ══ ADMIN: MANAGE LIST ══ */
+function renderManageList(){
+  const posts=getPosts(); const list=document.getElementById('manageList'); const none=document.getElementById('noPostsMsg');
+  if(!posts.length){ list.innerHTML=''; none.style.display='block'; return; }
+  none.style.display='none';
+  list.innerHTML=[...posts].reverse().map(p=>`
+    <div class="admin-post-item">
+      <span class="apl-title">${p.mood?p.mood+' ':''}${p.title}</span>
+      <span class="apl-date">${p.date}</span>
+      <div class="apl-btns">
+        <button class="btn-edit-post" style="padding:4px 10px;" onclick="editPost('${p.id}')">✏️</button>
+        <button class="btn-del-post"  style="padding:4px 10px;" onclick="deletePost('${p.id}')">✕</button>
+      </div>
+    </div>`).join('');
+}
+function editPost(id){
+  const post=getPosts().find(p=>p.id===id); if(!post) return;
+  editingId=id;
+  document.getElementById('pTitle').value=post.title;
+  document.getElementById('pBody').value =post.body;
+  document.getElementById('pDate').value =post.date;
+  document.getElementById('pMood').value =post.mood||'';
+  document.getElementById('pTags').value =(post.tags||[]).join(', ');
+  // switch to new tab
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-new').classList.add('active');
+  document.querySelector('.tab-btn').classList.add('active');
+  closeAdmin(); openAdmin(); // re-open so panel is fresh
+  document.getElementById('pTitle').focus();
+}
+function deletePost(id){
+  if(!confirm('Delete this post? Cannot be undone! ✕')) return;
+  savePosts(getPosts().filter(p=>p.id!==id));
+  renderPosts(); renderAllPosts(); renderManageList();
+}
+function deleteAllPosts(){
+  if(!confirm('Delete ALL posts forever?? ✕')) return;
+  savePosts([]); renderPosts(); renderAllPosts(); renderManageList();
+}
+
+/* ══ ADMIN: FAVORITES ══ */
+function renderAdminFavs(){
+  const favs=getFavs(); const list=document.getElementById('favsList');
+  list.innerHTML=favs.map((f,i)=>`
+    <div class="fav-item">
+      <span>${f}</span>
+      <button onclick="removeFav(${i})">✕ remove</button>
+    </div>`).join('');
+}
+function addFavorite(){
+  const input=document.getElementById('favInput');
+  const val=input.value.trim(); if(!val) return;
+  const favs=getFavs(); favs.push(val); saveFavs(favs);
+  input.value=''; renderAdminFavs(); renderSidebarFavs();
+  const msg=document.getElementById('favsMsg');
+  msg.style.display='block'; msg.textContent='✦ Added! ☆';
+  setTimeout(()=>msg.style.display='none',2000);
+}
+function removeFav(i){
+  const favs=getFavs(); favs.splice(i,1); saveFavs(favs);
+  renderAdminFavs(); renderSidebarFavs();
+}
+
+/* ══ ADMIN: GALLERY ══ */
+function renderGalleryAdmin(){
+  const imgs=getGallery();
+  const grid=document.getElementById('galleryAdminGrid');
+  const none=document.getElementById('noGalleryMsg');
+  if(!imgs.length){ grid.innerHTML=''; none.style.display='block'; return; }
+  none.style.display='none';
+  grid.innerHTML=imgs.map((src,i)=>`
+    <div class="gag-item">
+      <img src="${src}" alt="">
+      <button class="gag-del" onclick="deleteGalleryImg(${i})">✕</button>
+    </div>`).join('');
+}
+function uploadGalleryImages(input){
+  const files=Array.from(input.files); if(!files.length) return;
+  const msg=document.getElementById('uploadMsg');
+  msg.textContent=`Loading ${files.length} image(s)...`;
+  let done=0;
+  const imgs=getGallery();
+  files.forEach(file=>{
+    const reader=new FileReader();
+    reader.onload=e=>{
+      imgs.push(e.target.result); done++;
+      if(done===files.length){
+        saveGallery(imgs); renderGalleryAdmin(); renderGallery();
+        msg.textContent=`✦ ${done} image(s) uploaded!`;
+        setTimeout(()=>msg.textContent='',3000);
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+  input.value='';
+}
+function deleteGalleryImg(i){
+  if(!confirm('Remove this image? ✕')) return;
+  const imgs=getGallery(); imgs.splice(i,1); saveGallery(imgs);
+  renderGalleryAdmin(); renderGallery();
+}
+
+/* ══ ADMIN: SETTINGS ══ */
+function changePassword(){
+  const a=document.getElementById('newPw1').value;
+  const b=document.getElementById('newPw2').value;
+  const msg=document.getElementById('pwMsg');
+  if(!a){ msg.style.display='block';msg.style.color='#e11d48';msg.textContent='Enter a password! ✕';return; }
+  if(a!==b){ msg.style.display='block';msg.style.color='#e11d48';msg.textContent="Passwords don't match! ✕";return; }
+  localStorage.setItem(PW_KEY,a);
+  document.getElementById('newPw1').value=''; document.getElementById('newPw2').value='';
+  msg.style.display='block';msg.style.color='#059669';msg.textContent='Password saved! ☆';
+  setTimeout(()=>msg.style.display='none',3000);
+}
+
+/* ══ KEYBOARD SHORTCUT ══ */
+document.addEventListener('keydown',e=>{
+  if(e.ctrlKey&&e.shiftKey&&e.key==='A'){ e.preventDefault(); openAdmin(); }
+});
+
+/* ══ INIT ══ */
+renderPosts();
+renderSidebarFavs();
+renderGallery();
+</script>
+</body>
+</html>
